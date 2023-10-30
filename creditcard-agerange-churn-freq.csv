@@ -1,0 +1,8 @@
+churn,credit_card,age_range,frequency
+0,1,30-40,2988
+0,0,30-40,1228
+0,0,Other,1104
+1,1,Other,1015
+1,0,Other,460
+1,1,30-40,409
+1,0,30-40,153

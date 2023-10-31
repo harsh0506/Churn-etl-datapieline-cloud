@@ -9,14 +9,15 @@ import joblib
 import os
 from DownloadCsvFile import download_csv_from_s3  
 from CreateEvalMetrics import CreateEvalMetrix
+from UploadtoS3 import upload_file_to_s3
+
+access_key = os.getenv("access_key")
+secret_access_key = os.getenv("secret_access_key")
+region = os.getenv("region")
+s3_bucket = 'luffydatalake'
+s3_key = 'temp/churn.csv'
 
 if not os.path.exists('churn.csv'):
-    access_key = os.getenv("access_key")
-    secret_access_key = os.getenv("secret_access_key")
-    region = os.getenv("region")
-    s3_bucket = 'luffydatalake'
-    s3_key = 'temp/churn.csv'
-    
     download_csv_from_s3(access_key, secret_access_key, region, s3_bucket, s3_key, 'churn.csv')
     
 
@@ -39,6 +40,10 @@ df['credit_score_range'] = label_encoder.fit_transform(df['credit_score_range'])
 
 numerical_columns = df.select_dtypes(include=['number']).columns
 df[numerical_columns] = scaler.fit_transform(df[numerical_columns])
+
+df.to_csv('cleaned_churn.csv', index=False)
+upload_file_to_s3('cleaned_churn.csv', 'luffydatalake', 'temp', access_key, secret_access_key, region)
+
 
 y = df["churn"]
 x = df.drop('churn', axis=1) 
@@ -69,8 +74,11 @@ gbm = GradientBoostingClassifier(
 )
 
 gbm.fit(X_train, y_train)
-model_file = 'gradient_boosting_model.pkl'
+
+model_file = 'gbm.pkl'
 joblib.dump(gbm, model_file)
+upload_file_to_s3('gbm.pkl', 'luffydatalake', 'model', access_key, secret_access_key, region)
+
 y_pred = gbm.predict(X_test)
 y_pred = gbm.predict(X_test)
 accuracy = accuracy_score(y_test, y_pred)
@@ -81,3 +89,6 @@ y_pred_prob = gbm.predict_proba(X_test)[:, 1]
 auc = roc_auc_score(y_test, y_pred_prob)
 
 CreateEvalMetrix(accuracy, f1, precision, recall, auc)
+
+upload_file_to_s3('gbm.pkl', 'luffydatalake', 'model', access_key, secret_access_key, region)
+

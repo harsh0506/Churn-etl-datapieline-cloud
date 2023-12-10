@@ -1,0 +1,13 @@
+active_member,churn,country,total_number
+1,0,France,16240
+0,0,France,13529
+0,1,France,3631
+1,1,France,2105
+1,0,Germany,6749
+0,0,Germany,5275
+0,1,Germany,3671
+1,1,Germany,2096
+1,0,Spain,8303
+0,0,Spain,6324
+0,1,Spain,1939
+1,1,Spain,998

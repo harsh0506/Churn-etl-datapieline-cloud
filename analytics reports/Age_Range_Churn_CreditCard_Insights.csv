@@ -1,0 +1,5 @@
+gender,average_salary,average_bal,churn_status,total_customers
+Female,102966.449342,89024.808587,not-stayed,8082
+Female,99809.041566,71260.521129,stayed,24120
+Male,99455.971917,93796.509346,not-stayed,6358
+Male,99680.030576,73859.005236,stayed,32300

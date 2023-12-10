@@ -10,6 +10,8 @@ Migrate raw csv to s3 (data archieve folder)
 Load cleaned csv to s3 (in temp and data archieve folder)
 Delete raw and clean csv form system
 
+note :: Model generation yet to be added yet
+
 """
 
 # Import required modules and functions
@@ -23,12 +25,15 @@ from UploadtoS3 import upload_file_to_s3
 from InsertIntoDb import PopulateData
 from runsql import Create_Analyics_reports
 
+
 # Declare the variables
 access_key = os.getenv("access_key")
 secret_access_key = os.getenv("secret_access_key")
 region = os.getenv("region")
 s3_bucket = "luffydatalake"
 s3_key = "temp/churn.csv"
+
+
 
 # check if the raw csv file exists in the system
 if not os.path.exists("churn.csv"):
@@ -116,4 +121,4 @@ def DelCsvFile(name):
         
 DelCsvFile("churn.csv")
 DelCsvFile("cleaned_churn.csv")
-DelCsvFile("analytics report")
+DelCsvFile("analytics reports")

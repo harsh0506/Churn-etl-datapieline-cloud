@@ -76,6 +76,3 @@ def Create_Analyics_reports():
                     
     upload_folder_to_s3(folder_path,"luffydatalake","analyticsreport")
     
-    
-
-Create_Analyics_reports()

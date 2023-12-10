@@ -17,7 +17,7 @@ def upload_file_to_s3(file_path, bucket_name, s3_folder, access_key, secret_acce
     if naming_convention == 'original':
         s3_key = f'{s3_folder}/{file_name}'
     elif naming_convention == 'archieve':
-        current_date = datetime.now().strftime('%Y%m%d')
+        current_date = datetime.now().strftime('%Y%m%d%H%M')
         s3_key = f'{s3_folder}/{file_base}_{current_date}{file_ext}'
     elif naming_convention == 'date_and_time':
         current_datetime = datetime.now().strftime('%Y%m%d%H%M%S')
